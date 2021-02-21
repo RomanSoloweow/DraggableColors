@@ -7,6 +7,9 @@ using ReactiveUI;
 using DraggableColors.ViewModels;
 using Avalonia.Input;
 using System;
+using Avalonia.Input.Platform;
+using Avalonia.Interactivity;
+using AvaloniaAppTemplate.Extensions;
 
 namespace DraggableColors.Views
 {
@@ -62,8 +65,7 @@ namespace DraggableColors.Views
                 
                 this.Panel.Events().PointerPressed.Subscribe(OnEventBorderPointerPressed).DisposeWith(disposables);
                 this.Panel.Events().PointerReleased.Subscribe(OnEventBorderPointerReleased).DisposeWith(disposables);
-                
-                            
+                this.Panel.Events().DoubleTapped.Subscribe(OnEventBorderDoubleTapped).DisposeWith(disposables);
                 this.OneWayBind(this.ViewModel, 
                         x => x.Position.X, 
                         x => x.Parent.ZIndex)
@@ -80,7 +82,10 @@ namespace DraggableColors.Views
             this.PointerMoved += OnEventPointerMoved;
             oldPosition = e.GetPosition(MainWindow.Current.ItemsControlRectangles);
         }
-
+        void OnEventBorderDoubleTapped(RoutedEventArgs e)
+        {
+            Application.Current.Clipboard.SetTextAsync(ViewModel.Color.ToFormatString());
+        }
         void OnEventBorderPointerReleased(PointerReleasedEventArgs e)
         {
             this.PointerMoved -= this.OnEventPointerMoved;
