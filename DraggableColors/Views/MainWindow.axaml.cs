@@ -16,16 +16,11 @@ namespace DraggableColors.Views
         {
             InitializeComponent();
             Current = this;
-            // ItemControl = this.ItemsControlRectangles;
-//-:cnd:noEmit
-#if DEBUG
-            this.AttachDevTools();
-#endif
-//+:cnd:noEmit
+            SetupBinding();
         }
         
 
-        private void InitializeComponent()
+        private void SetupBinding()
         {
             this.WhenActivated(disposables =>
             {
@@ -34,8 +29,6 @@ namespace DraggableColors.Views
                     x => x.ItemsControlRectangles.Items)
                     .DisposeWith(disposables);
             });
-
-            AvaloniaXamlLoader.Load(this);
 
         }
     }

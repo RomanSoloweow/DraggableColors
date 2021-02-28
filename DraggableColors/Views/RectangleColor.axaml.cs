@@ -19,10 +19,11 @@ namespace DraggableColors.Views
         public RectangleColor()
         {
             InitializeComponent();
+            SetupBinding();
         }
         public TranslateTransform? TranslateTransform;
 
-        private void InitializeComponent()
+        private void SetupBinding()
         {
             this.WhenActivated(disposables =>
             {
@@ -72,9 +73,6 @@ namespace DraggableColors.Views
                     .DisposeWith(disposables);
                 
             });
-
-            AvaloniaXamlLoader.Load(this);
-
         }
         
         void OnEventBorderPointerPressed(PointerPressedEventArgs e)
